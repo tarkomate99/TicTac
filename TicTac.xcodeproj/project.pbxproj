@@ -16,6 +16,7 @@
 		048530C72864833200A425F5 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 048530C62864833200A425F5 /* FirebaseFirestore */; };
 		048530C92864833200A425F5 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 048530C82864833200A425F5 /* FirebaseStorage */; };
 		048530CB2864836E00A425F5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 048530CA2864836E00A425F5 /* GoogleService-Info.plist */; };
+		048530E728650C9900A425F5 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048530E628650C9900A425F5 /* Photo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		048530BD2864825500A425F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		048530BF2864825500A425F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		048530CA2864836E00A425F5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		048530E628650C9900A425F5 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				048530BA2864825500A425F5 /* Assets.xcassets */,
 				048530BC2864825500A425F5 /* LaunchScreen.storyboard */,
 				048530BF2864825500A425F5 /* Info.plist */,
+				048530E628650C9900A425F5 /* Photo.swift */,
 			);
 			path = TicTac;
 			sourceTree = "<group>";
@@ -153,6 +156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				048530E728650C9900A425F5 /* Photo.swift in Sources */,
 				048530B62864825400A425F5 /* ViewController.swift in Sources */,
 				048530B22864825400A425F5 /* AppDelegate.swift in Sources */,
 				048530B42864825400A425F5 /* SceneDelegate.swift in Sources */,
