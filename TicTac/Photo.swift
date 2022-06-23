@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class Photo{
     
@@ -14,13 +15,15 @@ class Photo{
     var date: Date?
     var uploader: String?
     var url: String?
+    var image: UIImage?
     
-    init(id: String?, likes: Int?, date: Date?, uploader: String?, url: String?){
+    init(id: String?, likes: Int?, date: Date?, uploader: String?, url: String?, image: UIImage?){
         self.id = id
         self.likes = likes
         self.date = date
         self.uploader = uploader
         self.url = url
+        self.image = image
     }
     
 }

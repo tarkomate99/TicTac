@@ -15,18 +15,35 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var uploader: UILabel!
     @IBOutlet weak var likes: UILabel!
     @IBOutlet weak var date: UILabel!
+    @IBOutlet weak var heartIcon: UIImageView!
     
     private let storage = Storage.storage().reference()
     var paths = [String]()
     var imageViews = [UIImage]()
     var photos = [Photo]()
+    var current_id = ""
+    var current_index = 0
     
     override func viewDidLoad(){
         super.viewDidLoad()
-        retrievePhotos()
+        //retrievePhotos()
         loadDatas()
+    
+        let tapGR = UITapGestureRecognizer(target: self, action: #selector(self.imageTapped))
+        heartIcon.addGestureRecognizer(tapGR)
+        heartIcon.isUserInteractionEnabled = true
     }
-
+    
+    @objc func imageTapped(sender: UITapGestureRecognizer){
+        if sender.state == .ended {
+            let db = Firestore.firestore()
+            var likes = Int(likes.text!)
+            likes!+=1
+            self.likes.text = String(likes!)
+            db.collection("images").document(current_id).updateData(["likes": likes])
+            self.photos[current_index].likes = likes
+        }
+    }
     
     @IBAction func uploadPhotoTapped(){
         let picker = UIImagePickerController()
@@ -114,6 +131,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func loadDatas(){
         let db = Firestore.firestore()
         let dateFormatter = DateFormatter()
+        let storage = Storage.storage().reference()
         db.collection("images").getDocuments{ (snapshot, error) in
             if error == nil && snapshot != nil{
                 for doc in snapshot!.documents{
@@ -122,9 +140,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                     let likes = data["likes"] as? Int
                     let up_date = (data["upload_date"] as? Timestamp)?.dateValue() ?? Date()
                     let uploader = data["uploader"] as? String
-                    let url = data["url"] as? String
-                    let photo = Photo(id: id, likes: likes, date: up_date, uploader: uploader, url: url)
-                    self.photos.append(photo)
+                    let url = data["url"] as! String
+                    let fileRef = storage.child(url)
+                    fileRef.getData(maxSize: 5*1024*1024){ data, error in
+                        if let image = UIImage(data: data!){
+                            let photo = Photo(id: id, likes: likes, date: up_date, uploader: uploader, url: url, image: image)
+                            self.photos.append(photo)
+                        }
+                    }
                 }
             }
             
@@ -136,21 +159,24 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let arraylen = self.photos.count
         let randomInt = Int.random(in: 0...arraylen-1)
-        let img = self.imageViews[randomInt]
+        self.current_index = randomInt
+        //let img = self.imageViews[randomInt]
         let photo = self.photos[randomInt]
-        self.imgView.image = img
-        self.likes.text = String(photo.likes!)
-        self.uploader.text = photo.uploader
-        self.date.text = dateFormatter.string(from: photo.date!)
-        self.likes.adjustsFontSizeToFitWidth = true
-        self.likes.font = self.likes.font.withSize(17)
-        self.uploader.adjustsFontSizeToFitWidth = true
-        self.uploader.font = self.uploader.font.withSize(17)
-        self.date.adjustsFontSizeToFitWidth = true
-        self.date.font = self.date.font.withSize(17)
+        DispatchQueue.main.async {
+            self.imgView.image = photo.image
+            self.likes.text = String(photo.likes!)
+            self.uploader.text = photo.uploader
+            self.date.text = dateFormatter.string(from: photo.date!)
+            self.likes.adjustsFontSizeToFitWidth = true
+            self.likes.font = self.likes.font.withSize(17)
+            self.uploader.adjustsFontSizeToFitWidth = true
+            self.uploader.font = self.uploader.font.withSize(17)
+            self.date.adjustsFontSizeToFitWidth = true
+            self.date.font = self.date.font.withSize(17)
+        }
         
-        self.retrievePhotos()
-        self.loadDatas()
+        
+        self.current_id = photo.id!
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController){

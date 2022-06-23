@@ -30,13 +30,7 @@
                                     <action selector="pickRandomImage" destination="BYZ-38-t0r" eventType="touchDown" id="Z1r-pD-k4D"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Likes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="juX-9w-pWl">
-                                <rect key="frame" x="20" y="396" width="40" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aSo-rk-wPw">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aSo-rk-wPw">
                                 <rect key="frame" x="68" y="396" width="11" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -67,6 +61,9 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="heart.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="RpL-k5-Vl9">
+                                <rect key="frame" x="20" y="394.5" width="26" height="23.5"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -74,7 +71,6 @@
                             <constraint firstItem="iFr-WY-1kc" firstAttribute="top" secondItem="AFG-jQ-2VP" secondAttribute="bottom" constant="71" id="2hq-nY-JH2"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="oft-YS-KQl" secondAttribute="trailing" constant="26" id="7aE-A5-xTP"/>
                             <constraint firstItem="v1T-fs-3fw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="78" id="E0y-C4-IeI"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="juX-9w-pWl" secondAttribute="trailing" constant="354" id="Eff-KI-ToW"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="U9o-IN-CCg" secondAttribute="trailing" constant="20" id="H6U-tk-H5c"/>
                             <constraint firstItem="AFG-jQ-2VP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="HJh-dm-mjI"/>
                             <constraint firstItem="AFG-jQ-2VP" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="HOR-r6-fbV"/>
@@ -84,13 +80,15 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="AFG-jQ-2VP" secondAttribute="trailing" constant="20" id="Mfk-3n-8zq"/>
                             <constraint firstItem="U9o-IN-CCg" firstAttribute="top" secondItem="AFG-jQ-2VP" secondAttribute="bottom" constant="105" id="OrZ-AZ-ARu"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="iFr-WY-1kc" secondAttribute="trailing" constant="183" id="POw-5u-bH7"/>
-                            <constraint firstItem="juX-9w-pWl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="XCf-Hz-pv7"/>
-                            <constraint firstItem="U9o-IN-CCg" firstAttribute="top" secondItem="juX-9w-pWl" secondAttribute="bottom" constant="76" id="bXG-ag-7xQ"/>
+                            <constraint firstItem="aSo-rk-wPw" firstAttribute="leading" secondItem="RpL-k5-Vl9" secondAttribute="trailing" constant="22" id="Y7h-j9-9VQ"/>
+                            <constraint firstItem="RpL-k5-Vl9" firstAttribute="top" secondItem="AFG-jQ-2VP" secondAttribute="bottom" constant="5" id="aXf-dv-JaN"/>
+                            <constraint firstItem="U9o-IN-CCg" firstAttribute="top" secondItem="RpL-k5-Vl9" secondAttribute="bottom" constant="74" id="cgS-9j-fGq"/>
                             <constraint firstItem="iFr-WY-1kc" firstAttribute="leading" secondItem="v1T-fs-3fw" secondAttribute="trailing" constant="33" id="gT0-el-zeX"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="v1T-fs-3fw" secondAttribute="trailing" constant="261" id="gqR-CD-sRE"/>
                             <constraint firstItem="U9o-IN-CCg" firstAttribute="top" secondItem="iFr-WY-1kc" secondAttribute="bottom" constant="3" id="hIj-2Z-ELK"/>
                             <constraint firstItem="U9o-IN-CCg" firstAttribute="top" secondItem="aSo-rk-wPw" secondAttribute="bottom" constant="76" id="mVR-0D-WqE"/>
                             <constraint firstItem="oft-YS-KQl" firstAttribute="leading" secondItem="aSo-rk-wPw" secondAttribute="trailing" constant="273" id="umc-Qp-BOt"/>
+                            <constraint firstItem="RpL-k5-Vl9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="w3v-LP-oQT"/>
                             <constraint firstItem="U9o-IN-CCg" firstAttribute="top" secondItem="oft-YS-KQl" secondAttribute="bottom" constant="76" id="zXl-aQ-omU"/>
                         </constraints>
                     </view>
@@ -103,6 +101,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="date" destination="oft-YS-KQl" id="EhI-t4-o38"/>
+                        <outlet property="heartIcon" destination="RpL-k5-Vl9" id="wkP-Uc-wsE"/>
                         <outlet property="imgView" destination="AFG-jQ-2VP" id="cBZ-nA-bOy"/>
                         <outlet property="likes" destination="aSo-rk-wPw" id="g9d-85-7Wh"/>
                         <outlet property="uploader" destination="iFr-WY-1kc" id="MgF-0e-QGY"/>
@@ -132,6 +131,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="heart.fill" catalog="system" width="128" height="109"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
