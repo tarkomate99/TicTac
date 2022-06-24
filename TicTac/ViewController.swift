@@ -9,15 +9,15 @@ import UIKit
 import FirebaseStorage
 import FirebaseFirestore
 import SwiftUI
+import FirebaseAuth
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var imgView: UIImageView!
-    
     @IBOutlet weak var uploader: UILabel!
     @IBOutlet weak var likes: UILabel!
     @IBOutlet weak var date: UILabel!
     @IBOutlet weak var heartIcon: UIImageView!
-    
     @IBOutlet weak var rndImg: UIButton!
+    @IBOutlet weak var loginOrLogoutBtn: UIBarButtonItem!
     
     private let storage = Storage.storage().reference()
     var paths = [String]()
@@ -28,11 +28,42 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func viewDidLoad(){
         super.viewDidLoad()
-        rndImg.setTitleColor(.white, for: .normal)
         loadDatas()
         let tapGR = UITapGestureRecognizer(target: self, action: #selector(self.imageTapped))
         heartIcon.addGestureRecognizer(tapGR)
         heartIcon.isUserInteractionEnabled = true
+        self.uploader.alpha = 0
+        self.date.alpha = 0
+        self.heartIcon.alpha = 0
+        self.likes.alpha = 0
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationItem.setHidesBackButton(true, animated: true)
+        
+        
+        if Auth.auth().currentUser != nil {
+            self.loginOrLogoutBtn.title = "Kijelentkezés"
+            self.loginOrLogoutBtn.target = self
+            self.loginOrLogoutBtn.action = #selector(logOut)
+        }else{
+            self.loginOrLogoutBtn.title = "Bejelentkezés"
+            self.loginOrLogoutBtn.target = self
+            self.loginOrLogoutBtn.action = #selector(showLoginPage)
+        }
+    }
+    
+    
+    @objc func showLoginPage(){
+        let loginViewController = self.storyboard?.instantiateViewController(identifier: "LoginVC") as? LoginViewController
+        self.navigationController?.pushViewController(loginViewController!, animated: true)
+    }
+    
+    @objc func logOut(){
+        try! Auth.auth().signOut()
+        DispatchQueue.main.async {
+            self.loginOrLogoutBtn.title = "Bejelentkezés"
+            self.loginOrLogoutBtn.target = self
+            self.loginOrLogoutBtn.action = #selector(self.showLoginPage)
+        }
     }
     
     @objc func imageTapped(sender: UITapGestureRecognizer){
@@ -84,13 +115,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
         let path = "images/\(UUID().uuidString).jpg"
         let fileRef = storage.child(path)
-        
+        let user = Auth.auth().currentUser
         let uploadTask = fileRef.putData(imageData!, metadata: nil){
             metadata, error in
             
             if error == nil && metadata != nil {
                 let db = Firestore.firestore()
-                db.collection("images").document().setData(["url":path,"uploader":"tarkomate99", "upload_date":Date.now,"likes":0]) { error in
+                db.collection("images").document().setData(["url":path,"uploader":user?.email, "upload_date":Date.now,"likes":0]) { error in
                     
                     if error == nil{
                         self.retrievePhotos()
@@ -156,6 +187,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @IBAction func pickRandomImage(){
+        self.uploader.alpha = 1
+        self.date.alpha = 1
+        self.heartIcon.alpha = 1
+        self.likes.alpha = 1
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let arraylen = self.photos.count

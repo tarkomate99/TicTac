@@ -6,7 +6,8 @@
 //
 
 import UIKit
-
+import FirebaseAuth
+import Firebase
 class SignUpViewController: UIViewController {
 
     @IBOutlet weak var firstNameText: UITextField!
@@ -38,8 +39,83 @@ class SignUpViewController: UIViewController {
     }
     */
     
+    func validateFileds() -> String? {
+        if firstNameText.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
+            lastNameText.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
+            emailText.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
+            pwdText.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+            return "Töltsd ki a mezőket!"
+        }
+        
+        let cleanedPassword = pwdText.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,}")
+        
+        if passwordTest.evaluate(with: cleanedPassword) == false {
+            return "A jelszónak minumum 8 karakteresnek kell lennie, és speciális karaktert és számot kell tartalmaznia!"
+        }
+        
+        
+        return nil
+    }
+    
     
     @IBAction func registerTapped(_ sender: Any) {
+        
+        let error = validateFileds()
+        
+        if error != nil {
+            
+            showError(error!)
+            
+        }else{
+            
+            let firstName = firstNameText.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+            let lastName = lastNameText.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+            let email = emailText.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+            let passw = pwdText.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            Auth.auth().createUser(withEmail: email, password: passw) { (result, err) in
+                
+                if err != nil {
+                    print(err?.localizedDescription)
+                    self.showError("Error creating user")
+                }
+                else {
+                    let db = Firestore.firestore()
+                    db.collection("users").addDocument(data: ["firstname": firstName, "lastname": lastName, "uid": result!.user.uid ]){ (error) in
+                        
+                        if error != nil{
+                            self.showError("Error saving user data")
+                        }
+                    }
+                    
+                    self.showHomePage()
+                    
+                }
+                
+            }
+            
+            
+        }
+        
+        
+    }
+    
+    func showError(_ message:String){
+        errorLabel.text = message
+        errorLabel.alpha = 1
+    }
+    
+    func showHomePage(){
+        let homeViewController = self.storyboard?.instantiateViewController(identifier: "HomeVC") as? ViewController
+        self.navigationController?.pushViewController(homeViewController!, animated: true)
+        
+        /*
+         self.view.window?.rootViewController = homeViewController
+         self.view.window?.makeKeyAndVisible()
+         */
+       
     }
     
 }

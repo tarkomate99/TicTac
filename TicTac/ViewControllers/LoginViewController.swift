@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import FirebaseAuth
 class LoginViewController: UIViewController {
 
     
@@ -37,5 +37,23 @@ class LoginViewController: UIViewController {
     */
 
     @IBAction func loginTapped(_ sender: Any) {
+        
+        let email = self.emailText.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let password = self.pwdText.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        Auth.auth().signIn(withEmail: email, password: password){ (result, error) in
+            if error != nil {
+                self.errorLabel.text = error!.localizedDescription
+                self.errorLabel.alpha = 1
+            }else{
+                self.showHomePage()
+            }
+        }
+        
+    }
+    
+    func showHomePage(){
+        let homeViewController = self.storyboard?.instantiateViewController(identifier: "HomeVC") as? ViewController
+        self.navigationController?.pushViewController(homeViewController!, animated: true)
     }
 }

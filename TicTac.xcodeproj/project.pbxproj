@@ -19,6 +19,8 @@
 		048530E728650C9900A425F5 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048530E628650C9900A425F5 /* Photo.swift */; };
 		048530E92865D1DD00A425F5 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048530E82865D1DD00A425F5 /* SignUpViewController.swift */; };
 		048530EB2865D1F100A425F5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048530EA2865D1F100A425F5 /* LoginViewController.swift */; };
+		048530EF2865E06E00A425F5 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 048530EE2865E06E00A425F5 /* FirebaseAuth */; };
+		048530F52865F3C500A425F5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048530F42865F3C500A425F5 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,7 @@
 		048530E628650C9900A425F5 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		048530E82865D1DD00A425F5 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		048530EA2865D1F100A425F5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		048530F42865F3C500A425F5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +45,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				048530C72864833200A425F5 /* FirebaseFirestore in Frameworks */,
+				048530EF2865E06E00A425F5 /* FirebaseAuth in Frameworks */,
 				048530C92864833200A425F5 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -68,6 +72,7 @@
 		048530B02864825400A425F5 /* TicTac */ = {
 			isa = PBXGroup;
 			children = (
+				048530F32865F3B700A425F5 /* Constants */,
 				048530EC2865D21300A425F5 /* ViewControllers */,
 				048530CA2864836E00A425F5 /* GoogleService-Info.plist */,
 				048530B12864825400A425F5 /* AppDelegate.swift */,
@@ -91,6 +96,14 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		048530F32865F3B700A425F5 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				048530F42865F3C500A425F5 /* Constants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -110,6 +123,7 @@
 			packageProductDependencies = (
 				048530C62864833200A425F5 /* FirebaseFirestore */,
 				048530C82864833200A425F5 /* FirebaseStorage */,
+				048530EE2865E06E00A425F5 /* FirebaseAuth */,
 			);
 			productName = TicTac;
 			productReference = 048530AE2864825400A425F5 /* TicTac.app */;
@@ -141,6 +155,7 @@
 			mainGroup = 048530A52864825400A425F5;
 			packageReferences = (
 				048530C52864833200A425F5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				048530ED2865E06D00A425F5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 048530AF2864825400A425F5 /* Products */;
 			projectDirPath = "";
@@ -174,6 +189,7 @@
 				048530E728650C9900A425F5 /* Photo.swift in Sources */,
 				048530B62864825400A425F5 /* ViewController.swift in Sources */,
 				048530B22864825400A425F5 /* AppDelegate.swift in Sources */,
+				048530F52865F3C500A425F5 /* Constants.swift in Sources */,
 				048530B42864825400A425F5 /* SceneDelegate.swift in Sources */,
 				048530E92865D1DD00A425F5 /* SignUpViewController.swift in Sources */,
 			);
@@ -403,6 +419,14 @@
 				kind = branch;
 			};
 		};
+		048530ED2865E06D00A425F5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -415,6 +439,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 048530C52864833200A425F5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		048530EE2865E06E00A425F5 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 048530C52864833200A425F5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
