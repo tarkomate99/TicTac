@@ -17,6 +17,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var date: UILabel!
     @IBOutlet weak var heartIcon: UIImageView!
     
+    @IBOutlet weak var rndImg: UIButton!
+    
     private let storage = Storage.storage().reference()
     var paths = [String]()
     var imageViews = [UIImage]()
@@ -26,9 +28,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func viewDidLoad(){
         super.viewDidLoad()
-        //retrievePhotos()
+        rndImg.setTitleColor(.white, for: .normal)
         loadDatas()
-    
         let tapGR = UITapGestureRecognizer(target: self, action: #selector(self.imageTapped))
         heartIcon.addGestureRecognizer(tapGR)
         heartIcon.isUserInteractionEnabled = true
