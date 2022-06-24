@@ -18,6 +18,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var heartIcon: UIImageView!
     @IBOutlet weak var rndImg: UIButton!
     @IBOutlet weak var loginOrLogoutBtn: UIBarButtonItem!
+    @IBOutlet weak var uploadBtn: UIButton!
     
     private let storage = Storage.storage().reference()
     var paths = [String]()
@@ -44,10 +45,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             self.loginOrLogoutBtn.title = "Kijelentkezés"
             self.loginOrLogoutBtn.target = self
             self.loginOrLogoutBtn.action = #selector(logOut)
+            self.uploadBtn.alpha = 1
         }else{
             self.loginOrLogoutBtn.title = "Bejelentkezés"
             self.loginOrLogoutBtn.target = self
             self.loginOrLogoutBtn.action = #selector(showLoginPage)
+            self.uploadBtn.alpha = 0
         }
     }
     
@@ -63,17 +66,22 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             self.loginOrLogoutBtn.title = "Bejelentkezés"
             self.loginOrLogoutBtn.target = self
             self.loginOrLogoutBtn.action = #selector(self.showLoginPage)
+            self.uploadBtn.alpha = 0
         }
     }
     
     @objc func imageTapped(sender: UITapGestureRecognizer){
-        if sender.state == .ended {
-            let db = Firestore.firestore()
-            var likes = Int(likes.text!)
-            likes!+=1
-            self.likes.text = String(likes!)
-            db.collection("images").document(current_id).updateData(["likes": likes])
-            self.photos[current_index].likes = likes
+        if Auth.auth().currentUser == nil{
+            return
+        }else{
+            if sender.state == .ended {
+                let db = Firestore.firestore()
+                var likes = Int(likes.text!)
+                likes!+=1
+                self.likes.text = String(likes!)
+                db.collection("images").document(current_id).updateData(["likes": likes])
+                self.photos[current_index].likes = likes
+            }
         }
     }
     

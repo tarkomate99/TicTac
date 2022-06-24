@@ -127,6 +127,7 @@
                         <outlet property="imgView" destination="AFG-jQ-2VP" id="cBZ-nA-bOy"/>
                         <outlet property="likes" destination="7ws-SQ-WHp" id="oYu-R9-XJn"/>
                         <outlet property="loginOrLogoutBtn" destination="HiO-6M-dTY" id="fD3-CD-RGN"/>
+                        <outlet property="uploadBtn" destination="WbK-gy-HDK" id="rnS-mk-xVQ"/>
                         <outlet property="uploader" destination="BsL-fu-A2m" id="o7w-jz-mwp"/>
                     </connections>
                 </viewController>
