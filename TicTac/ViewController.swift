@@ -18,7 +18,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var heartIcon: UIImageView!
     @IBOutlet weak var rndImg: UIButton!
     @IBOutlet weak var loginOrLogoutBtn: UIBarButtonItem!
-    @IBOutlet weak var uploadBtn: UIButton!
+    @IBOutlet weak var uploadBarBtn: UIBarButtonItem!
+    
     
     private let storage = Storage.storage().reference()
     var paths = [String]()
@@ -27,8 +28,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     var current_id = ""
     var current_index = 0
     
+    let photoView = UIHostingController(rootView: PhotoSwiftUIView())
+    
     override func viewDidLoad(){
         super.viewDidLoad()
+        
+        addChild(photoView)
+        view.addSubview(photoView.view)
+        setupConstraints()
+        
         loadDatas()
         let tapGR = UITapGestureRecognizer(target: self, action: #selector(self.imageTapped))
         heartIcon.addGestureRecognizer(tapGR)
@@ -40,20 +48,34 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.navigationController?.navigationBar.isHidden = false
         self.navigationItem.setHidesBackButton(true, animated: true)
         
-        
         if Auth.auth().currentUser != nil {
             self.loginOrLogoutBtn.title = "Kijelentkezés"
             self.loginOrLogoutBtn.target = self
             self.loginOrLogoutBtn.action = #selector(logOut)
-            self.uploadBtn.alpha = 1
+            self.uploadBarBtn.target = self
+            self.uploadBarBtn.action = #selector(showSelectPage)
         }else{
             self.loginOrLogoutBtn.title = "Bejelentkezés"
             self.loginOrLogoutBtn.target = self
             self.loginOrLogoutBtn.action = #selector(showLoginPage)
-            self.uploadBtn.alpha = 0
+            self.uploadBarBtn.target = self
+            self.uploadBarBtn.action = #selector(showLoginPage)
         }
+        
     }
     
+    fileprivate func setupConstraints(){
+        photoView.view.translatesAutoresizingMaskIntoConstraints = false
+        photoView.view.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        photoView.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        photoView.view.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        photoView.view.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+    }
+    
+    @objc func showSelectPage(){
+        let selectViewController = self.storyboard?.instantiateViewController(identifier: "UploadVC") as? SelectViewController
+        self.navigationController?.pushViewController(selectViewController!, animated: true)
+    }
     
     @objc func showLoginPage(){
         let loginViewController = self.storyboard?.instantiateViewController(identifier: "LoginVC") as? LoginViewController
@@ -66,7 +88,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             self.loginOrLogoutBtn.title = "Bejelentkezés"
             self.loginOrLogoutBtn.target = self
             self.loginOrLogoutBtn.action = #selector(self.showLoginPage)
-            self.uploadBtn.alpha = 0
+            self.uploadBarBtn.target = self
+            self.uploadBarBtn.action = #selector(self.showLoginPage)
         }
     }
     
@@ -85,62 +108,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
     }
     
-    @IBAction func uploadPhotoTapped(){
-        let picker = UIImagePickerController()
-        picker.sourceType = .photoLibrary
-        picker.delegate = self
-        picker.allowsEditing = true
-        present(picker, animated: true)
-        
-        guard let urlString = UserDefaults.standard.value(forKey: "url") as? String,
-              let url = URL(string: urlString) else {
-                return
-        }
-        
-        let task = URLSession.shared.dataTask(with: url, completionHandler: { data, _, error in
-            guard let data = data, error == nil else {
-                return
-            }
-            
-            DispatchQueue.main.async {
-                let image = UIImage(data: data)
-            }
-        })
-        
-        task.resume()
-    }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]){
-        picker.dismiss(animated: true)
-        guard let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {
-            return
-        }
-        
-        let imageData = image.jpegData(compressionQuality: 0.8)
-        
-        guard imageData != nil else {
-            return
-        }
-        let path = "images/\(UUID().uuidString).jpg"
-        let fileRef = storage.child(path)
-        let user = Auth.auth().currentUser
-        let uploadTask = fileRef.putData(imageData!, metadata: nil){
-            metadata, error in
-            
-            if error == nil && metadata != nil {
-                let db = Firestore.firestore()
-                db.collection("images").document().setData(["url":path,"uploader":user?.email, "upload_date":Date.now,"likes":0]) { error in
-                    
-                    if error == nil{
-                        self.retrievePhotos()
-                    }
-                    
-                }
-            }
-        }
-        
-        
-    }
     
     func retrievePhotos() {
         let db = Firestore.firestore()

@@ -94,7 +94,7 @@
                                             </backgroundConfiguration>
                                         </buttonConfiguration>
                                         <connections>
-                                            <action selector="uploadPhotoTapped" destination="BYZ-38-t0r" eventType="touchDown" id="DPw-lb-kaZ"/>
+                                            <segue destination="zbf-Sz-NIO" kind="show" id="GyW-5q-ybd"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -119,6 +119,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="hy9-fG-y27">
+                        <barButtonItem key="leftBarButtonItem" title="Feltöltés" id="KBr-zv-Eqf"/>
                         <barButtonItem key="rightBarButtonItem" title="Bejelentkezés" id="HiO-6M-dTY"/>
                     </navigationItem>
                     <connections>
@@ -127,7 +128,7 @@
                         <outlet property="imgView" destination="AFG-jQ-2VP" id="cBZ-nA-bOy"/>
                         <outlet property="likes" destination="7ws-SQ-WHp" id="oYu-R9-XJn"/>
                         <outlet property="loginOrLogoutBtn" destination="HiO-6M-dTY" id="fD3-CD-RGN"/>
-                        <outlet property="uploadBtn" destination="WbK-gy-HDK" id="rnS-mk-xVQ"/>
+                        <outlet property="uploadBarBtn" destination="KBr-zv-Eqf" id="7HY-l0-ZAm"/>
                         <outlet property="uploader" destination="BsL-fu-A2m" id="o7w-jz-mwp"/>
                     </connections>
                 </viewController>
@@ -333,6 +334,76 @@
             </objects>
             <point key="canvasLocation" x="131.8840579710145" y="85.714285714285708"/>
         </scene>
+        <!--Select View Controller-->
+        <scene sceneID="7lY-fM-A1X">
+            <objects>
+                <viewController storyboardIdentifier="UploadVC" id="zbf-Sz-NIO" customClass="SelectViewController" customModule="TicTac" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6KS-Lb-tDI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="fNP-y9-GNr">
+                                <rect key="frame" x="40" y="662" width="334" height="160"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UIQ-Cb-d7h">
+                                        <rect key="frame" x="0.0" y="0.0" width="334" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="uwh-ih-z2A"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Camera">
+                                            <backgroundConfiguration key="background">
+                                                <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                            </backgroundConfiguration>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="openCameraButtonWithSender:" destination="zbf-Sz-NIO" eventType="touchDown" id="sVR-7B-kCb"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s2G-78-thk">
+                                        <rect key="frame" x="0.0" y="60" width="334" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="0IU-lv-Mq6"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Galéria">
+                                            <backgroundConfiguration key="background">
+                                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                            </backgroundConfiguration>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="uploadPhotoTapped" destination="zbf-Sz-NIO" eventType="touchDown" id="YDE-Gr-CsZ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cN3-WN-D9T">
+                                        <rect key="frame" x="0.0" y="120" width="334" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="zXZ-Lb-BOQ"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Video">
+                                            <backgroundConfiguration key="background">
+                                                <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                            </backgroundConfiguration>
+                                        </buttonConfiguration>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="uJY-Qh-NNo"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="uJY-Qh-NNo" firstAttribute="trailing" secondItem="fNP-y9-GNr" secondAttribute="trailing" constant="40" id="POH-Fu-Xcd"/>
+                            <constraint firstItem="uJY-Qh-NNo" firstAttribute="bottom" secondItem="fNP-y9-GNr" secondAttribute="bottom" constant="40" id="hFY-0k-kh1"/>
+                            <constraint firstItem="fNP-y9-GNr" firstAttribute="leading" secondItem="uJY-Qh-NNo" secondAttribute="leading" constant="40" id="vUh-zB-tSQ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Gji-LU-TVG"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UV3-mm-G19" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2357" y="81"/>
+        </scene>
     </scenes>
     <resources>
         <image name="heart.fill" catalog="system" width="128" height="109"/>
@@ -345,8 +416,14 @@
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
