@@ -386,6 +386,9 @@
                                                 <color key="backgroundColor" systemColor="systemYellowColor"/>
                                             </backgroundConfiguration>
                                         </buttonConfiguration>
+                                        <connections>
+                                            <action selector="selectVideo" destination="zbf-Sz-NIO" eventType="touchUpInside" id="zyh-Sw-MG6"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>

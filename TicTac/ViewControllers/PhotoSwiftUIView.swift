@@ -45,6 +45,7 @@ struct PhotoSwiftUIView: View {
                     }
                     
                 }.onAppear{
+                    self.photos.removeAll()
                     loadDatas()
                 }
                 

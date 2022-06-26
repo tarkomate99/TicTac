@@ -22,6 +22,7 @@ class SignUpViewController: UIViewController {
         super.viewDidLoad()
         setUpElements()
         // Do any additional setup after loading the view.
+        self.emailText.keyboardType = UIKeyboardType.emailAddress
     }
     
     func setUpElements(){

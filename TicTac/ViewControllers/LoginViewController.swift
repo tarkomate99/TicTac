@@ -25,6 +25,7 @@ class LoginViewController: UIViewController {
     
     func setUpElements(){
         errorLabel.alpha = 0
+        self.emailText.keyboardType = UIKeyboardType.emailAddress
     }
     /*
     // MARK: - Navigation
