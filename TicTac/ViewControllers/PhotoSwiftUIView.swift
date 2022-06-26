@@ -15,6 +15,8 @@ struct PhotoSwiftUIView: View {
     
     @State var photos = [Photo]()
     @State var videos = [Video]()
+    @State private var fgColor: Color = .gray
+    @State private var image: String = "heart"
     let dateFormatter = DateFormatter()
     
     
@@ -22,53 +24,70 @@ struct PhotoSwiftUIView: View {
         ScrollView{
             VStack(spacing: 20){
                 ForEach(0..<self.photos.count, id: \.self){ i in
+                    var isTapped: Bool = false
+                    HStack{
+                        Image(systemName: "person.circle.fill")
+                        Text(self.photos[i].uploader!)
+                    }.frame(maxWidth: .infinity, alignment: .leading)
                     Image(uiImage: self.photos[i].image!).resizable()
                         .frame(width: 300, height: 300, alignment: .center)
                     HStack{
-                        Image(systemName: "heart.fill").onTapGesture {
+                        var likes = self.photos[i].likes!
+                        Image(systemName: image)
+                            .foregroundColor(fgColor)
+                            .onTapGesture{
                             if Auth.auth().currentUser == nil{
                                 return
                             }else{
+                                image = "heart.fill"
+                                fgColor = .red
                                 let db = Firestore.firestore()
-                                var likes = self.photos[i].likes!
                                 likes+=1
                                 db.collection("images").document(self.photos[i].id!).updateData(
                                     ["likes": likes])
                                 self.photos[i].likes = likes
+                                /*
                                 self.photos.removeAll()
                                 loadDatas()
+                                 */
                                 }
-                            }
-                        Text(String(self.photos[i].likes!))
-                        Divider()
-                        Text(self.photos[i].uploader!)
-                        Divider()
+                        }
+                        Text(String(likes))
+                        Spacer(minLength: 80)
                         Text(self.photos[i].date!, style: .date)
                     }
                     Divider().padding()
                     }
                 ForEach(0..<self.videos.count, id: \.self){ i in
+                    HStack{
+                        Image(systemName: "person.circle.fill")
+                        Text(self.videos[i].uploader!)
+                    }.frame(maxWidth: .infinity, alignment: .leading)
                     let url = URL(string: self.videos[i].url!)
                     VideoPlayer(player: AVPlayer(url: url!)).frame(width: 300, height: 300, alignment: .center)
                     HStack{
-                        Image(systemName: "heart.fill").onTapGesture {
+                        var likes = self.videos[i].likes!
+                        Image(systemName: image)
+                            .foregroundColor(fgColor)
+                            .onTapGesture{
                             if Auth.auth().currentUser == nil{
                                 return
                             }else{
+                                image = "heart.fill"
+                                fgColor = .red
                                 let db = Firestore.firestore()
-                                var likes = self.videos[i].likes!
                                 likes+=1
-                                db.collection("videos").document(self.videos[i].id!).updateData(
+                                db.collection("images").document(self.photos[i].id!).updateData(
                                     ["likes": likes])
-                                self.videos[i].likes = likes
+                                self.photos[i].likes = likes
+                                /*
                                 self.videos.removeAll()
                                 loadVideos()
+                                 */
                                 }
-                            }
-                        Text(String(self.videos[i].likes!))
-                        Divider()
-                        Text(self.videos[i].uploader!)
-                        Divider()
+                        }
+                        Text(String(likes))
+                        Spacer(minLength: 80)
                         Text(self.videos[i].date!, style: .date)
                     }
                     Divider()
