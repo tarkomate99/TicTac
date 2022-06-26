@@ -17,13 +17,16 @@ struct PhotoListView: View {
     @State var videos = [Video]()
     @State private var fgColor: Color = .gray
     @State private var image: String = "heart"
+    
+    @State var currentScale: CGFloat = 0
+    @State var finalScale: CGFloat = 1
+    
     let dateFormatter = DateFormatter()
     
     var body: some View {
         ScrollView{
             VStack(spacing: 20){
                 ForEach(0..<self.photos.count, id: \.self){ i in
-                    var isTapped: Bool = false
                     HStack{
                         Image(systemName: "person.circle.fill")
                         Text(self.photos[i].uploader!)
@@ -31,6 +34,16 @@ struct PhotoListView: View {
                     var likes = self.photos[i].likes!
                     Image(uiImage: self.photos[i].image!).resizable()
                         .frame(width: 300, height: 300, alignment: .center)
+                        .scaleEffect(finalScale + currentScale)
+                        .gesture(MagnificationGesture()
+                            .onChanged{ newScale in
+                                currentScale = newScale
+                            }
+                            .onEnded{ scale in
+                                finalScale = scale
+                                currentScale = 0
+                            }
+                        )
                         .onTapGesture(count: 2){
                             if Auth.auth().currentUser == nil{
                                 return

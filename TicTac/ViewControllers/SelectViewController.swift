@@ -100,7 +100,10 @@ class SelectViewController: UIViewController, UIImagePickerControllerDelegate, U
                                     print(downloadURL)
                                     let db = Firestore.firestore()
                                     let user = Auth.auth().currentUser
-                                    db.collection("videos").document().setData(["url":url?.absoluteString,"uploader":user?.email, "upload_date":Date.now,"likes":0])
+                                    let user_email = user?.email
+                                    let at_index = user_email?.firstIndex(of: "@") ?? user_email?.endIndex
+                                    let final_email = user_email![..<at_index!]
+                                    db.collection("videos").document().setData(["url":url?.absoluteString,"uploader":final_email, "upload_date":Date.now,"likes":0])
                                 }
                             }
                         })
@@ -127,7 +130,10 @@ class SelectViewController: UIViewController, UIImagePickerControllerDelegate, U
                     
                     if error == nil && metadata != nil {
                         let db = Firestore.firestore()
-                        db.collection("images").document().setData(["url":path,"uploader":user?.email, "upload_date":Date.now,"likes":0]) { error in
+                        let user_email = user?.email
+                        let at_index = user_email?.firstIndex(of: "@") ?? user_email?.endIndex
+                        let final_email = user_email![..<at_index!]
+                        db.collection("images").document().setData(["url":path,"uploader":final_email, "upload_date":Date.now,"likes":0]) { error in
                             
                         }
                     }
