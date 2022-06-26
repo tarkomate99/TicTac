@@ -100,7 +100,7 @@ class SelectViewController: UIViewController, UIImagePickerControllerDelegate, U
                                     print(downloadURL)
                                     let db = Firestore.firestore()
                                     let user = Auth.auth().currentUser
-                                    db.collection("videos").document().setData(["url":name,"uploader":user?.email, "upload_date":Date.now,"likes":0])
+                                    db.collection("videos").document().setData(["url":url?.absoluteString,"uploader":user?.email, "upload_date":Date.now,"likes":0])
                                 }
                             }
                         })

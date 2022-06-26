@@ -9,10 +9,14 @@ import SwiftUI
 import FirebaseFirestore
 import FirebaseStorage
 import FirebaseAuth
+import AVKit
+import AVFoundation
 struct PhotoSwiftUIView: View {
     
     @State var photos = [Photo]()
+    @State var videos = [Video]()
     let dateFormatter = DateFormatter()
+    
     
     var body: some View {
         ScrollView{
@@ -43,15 +47,62 @@ struct PhotoSwiftUIView: View {
                     }
                     Divider().padding()
                     }
+                ForEach(0..<self.videos.count, id: \.self){ i in
+                    let url = URL(string: self.videos[i].url!)
+                    VideoPlayer(player: AVPlayer(url: url!)).frame(width: 300, height: 300, alignment: .center)
+                    HStack{
+                        Image(systemName: "heart.fill").onTapGesture {
+                            if Auth.auth().currentUser == nil{
+                                return
+                            }else{
+                                let db = Firestore.firestore()
+                                var likes = self.videos[i].likes!
+                                likes+=1
+                                db.collection("videos").document(self.videos[i].id!).updateData(
+                                    ["likes": likes])
+                                self.videos[i].likes = likes
+                                self.videos.removeAll()
+                                loadVideos()
+                                }
+                            }
+                        Text(String(self.videos[i].likes!))
+                        Divider()
+                        Text(self.videos[i].uploader!)
+                        Divider()
+                        Text(self.videos[i].date!, style: .date)
+                    }
+                    Divider()
+                }
+                
                     
                 }.onAppear{
                     self.photos.removeAll()
+                    self.videos.removeAll()
                     loadDatas()
+                    loadVideos()
                 }
                 
             }.frame(width: .infinity, height: .infinity)
         }
     
+    func loadVideos(){
+        let db = Firestore.firestore()
+        db.collection("videos").getDocuments{ (snapshot, error) in
+            if error == nil && snapshot != nil{
+                for doc in snapshot!.documents{
+                    let data = doc.data()
+                    let id = doc.documentID
+                    let likes = data["likes"] as? Int
+                    let up_date = (data["upload_date"] as? Timestamp)?.dateValue() ?? Date()
+                    let uploader = data["uploader"] as? String
+                    let url = data["url"] as! String
+                    let video = Video(id: id, likes: likes, date: up_date, uploader: uploader, url: url)
+                    videos.append(video)
+                }
+            }
+            
+        }
+    }
     
     
     func loadDatas(){
