@@ -28,8 +28,32 @@ struct PhotoListView: View {
                         Image(systemName: "person.circle.fill")
                         Text(self.photos[i].uploader!)
                     }.frame(maxWidth: .infinity, alignment: .leading)
+                    var likes = self.photos[i].likes!
                     Image(uiImage: self.photos[i].image!).resizable()
                         .frame(width: 300, height: 300, alignment: .center)
+                        .onTapGesture(count: 2){
+                            if Auth.auth().currentUser == nil{
+                                return
+                            }else{
+                                if image == "heart" && fgColor == .gray{
+                                    image = "heart.fill"
+                                    fgColor = .red
+                                    let db = Firestore.firestore()
+                                    likes+=1
+                                    db.collection("images").document(self.photos[i].id!).updateData(
+                                        ["likes": likes])
+                                    self.photos[i].likes = likes
+                                }else if image == "heart.fill" && fgColor == .red{
+                                    image = "heart"
+                                    fgColor = .gray
+                                    let db = Firestore.firestore()
+                                    likes-=1
+                                    db.collection("images").document(self.photos[i].id!).updateData(
+                                        ["likes": likes])
+                                    self.photos[i].likes = likes
+                                }
+                            }
+                        }
                     HStack{
                         var likes = self.photos[i].likes!
                         Image(systemName: image)
@@ -55,10 +79,6 @@ struct PhotoListView: View {
                                             ["likes": likes])
                                         self.photos[i].likes = likes
                                     }
-                                    /*
-                                     self.photos.removeAll()
-                                     loadDatas()
-                                     */
                                 }
                             }
                         Text(String(likes))
