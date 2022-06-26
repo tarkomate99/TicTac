@@ -20,6 +20,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var loginOrLogoutBtn: UIBarButtonItem!
     @IBOutlet weak var uploadBarBtn: UIBarButtonItem!
     
+    var isUserAuth = false
     
     private let storage = Storage.storage().reference()
     var paths = [String]()
@@ -32,7 +33,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func viewDidLoad(){
         super.viewDidLoad()
-        
+        if Auth.auth().currentUser != nil {
+            self.loginOrLogoutBtn.title = "Kijelentkezés"
+            self.loginOrLogoutBtn.target = self
+            self.loginOrLogoutBtn.action = #selector(logOut)
+            self.uploadBarBtn.target = self
+            self.uploadBarBtn.action = #selector(showSelectPage)
+        }else{
+            self.loginOrLogoutBtn.title = "Bejelentkezés"
+            self.loginOrLogoutBtn.target = self
+            self.loginOrLogoutBtn.action = #selector(showLoginPage)
+            self.uploadBarBtn.target = self
+            self.uploadBarBtn.action = #selector(showLoginPage)
+        }
         addChild(photoView)
         view.addSubview(photoView.view)
         setupConstraints()
@@ -47,20 +60,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.likes.alpha = 0
         self.navigationController?.navigationBar.isHidden = false
         self.navigationItem.setHidesBackButton(true, animated: true)
-        
-        if Auth.auth().currentUser != nil {
-            self.loginOrLogoutBtn.title = "Kijelentkezés"
-            self.loginOrLogoutBtn.target = self
-            self.loginOrLogoutBtn.action = #selector(logOut)
-            self.uploadBarBtn.target = self
-            self.uploadBarBtn.action = #selector(showSelectPage)
-        }else{
-            self.loginOrLogoutBtn.title = "Bejelentkezés"
-            self.loginOrLogoutBtn.target = self
-            self.loginOrLogoutBtn.action = #selector(showLoginPage)
-            self.uploadBarBtn.target = self
-            self.uploadBarBtn.action = #selector(showLoginPage)
-        }
+    
         
     }
     

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		046925B12868864D007EC99C /* SelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046925B02868864D007EC99C /* SelectView.swift */; };
+		046925B328688EAE007EC99C /* PhotoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046925B228688EAE007EC99C /* PhotoListView.swift */; };
 		048530B22864825400A425F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048530B12864825400A425F5 /* AppDelegate.swift */; };
 		048530B42864825400A425F5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048530B32864825400A425F5 /* SceneDelegate.swift */; };
 		048530B62864825400A425F5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048530B52864825400A425F5 /* ViewController.swift */; };
@@ -27,6 +29,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		046925B02868864D007EC99C /* SelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectView.swift; sourceTree = "<group>"; };
+		046925B228688EAE007EC99C /* PhotoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListView.swift; sourceTree = "<group>"; };
 		048530AE2864825400A425F5 /* TicTac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		048530B12864825400A425F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		048530B32864825400A425F5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +63,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		046925B82868E867007EC99C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				048530E628650C9900A425F5 /* Photo.swift */,
+				048530FE2867DAD000A425F5 /* Video.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		048530A52864825400A425F5 = {
 			isa = PBXGroup;
 			children = (
@@ -78,6 +91,7 @@
 		048530B02864825400A425F5 /* TicTac */ = {
 			isa = PBXGroup;
 			children = (
+				046925B82868E867007EC99C /* Models */,
 				048530F32865F3B700A425F5 /* Constants */,
 				048530EC2865D21300A425F5 /* ViewControllers */,
 				048530CA2864836E00A425F5 /* GoogleService-Info.plist */,
@@ -88,8 +102,6 @@
 				048530BA2864825500A425F5 /* Assets.xcassets */,
 				048530BC2864825500A425F5 /* LaunchScreen.storyboard */,
 				048530BF2864825500A425F5 /* Info.plist */,
-				048530E628650C9900A425F5 /* Photo.swift */,
-				048530FE2867DAD000A425F5 /* Video.swift */,
 			);
 			path = TicTac;
 			sourceTree = "<group>";
@@ -101,6 +113,8 @@
 				048530EA2865D1F100A425F5 /* LoginViewController.swift */,
 				048530F8286671FD00A425F5 /* SelectViewController.swift */,
 				048530FC2866799700A425F5 /* PhotoSwiftUIView.swift */,
+				046925B02868864D007EC99C /* SelectView.swift */,
+				046925B228688EAE007EC99C /* PhotoListView.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -200,10 +214,12 @@
 				048530B22864825400A425F5 /* AppDelegate.swift in Sources */,
 				048530F9286671FD00A425F5 /* SelectViewController.swift in Sources */,
 				048530FD2866799700A425F5 /* PhotoSwiftUIView.swift in Sources */,
+				046925B12868864D007EC99C /* SelectView.swift in Sources */,
 				048530F52865F3C500A425F5 /* Constants.swift in Sources */,
 				048530B42864825400A425F5 /* SceneDelegate.swift in Sources */,
 				048530E92865D1DD00A425F5 /* SignUpViewController.swift in Sources */,
 				048530FF2867DAD000A425F5 /* Video.swift in Sources */,
+				046925B328688EAE007EC99C /* PhotoListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
